@@ -372,8 +372,6 @@ APPROVE / REJECT / ESCALATE_HUMAN のいずれかで判断してください。
 Decision: APPROVE | REJECT | ESCALATE_HUMAN
 ```
 
-## `/git-commit-workflow`
-
 ## `/template-commit-workflow`
 
 ### 使うタイミング
