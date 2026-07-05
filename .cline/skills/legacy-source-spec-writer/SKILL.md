@@ -1,0 +1,99 @@
+---
+name: legacy-source-spec-writer
+description: Create Markdown specifications from existing source code. Use when documenting current behavior, reverse-engineering features, summarizing legacy source, or preparing specs before migration or refactoring.
+---
+
+# Legacy Source Spec Writer
+
+Create accurate Markdown specifications from existing source code.
+
+## Purpose
+
+Reverse-engineer current behavior from source code and produce a clear specification document. This skill is for documentation only. Do not modify source code.
+
+## Use This Skill When
+
+- Creating a specification from existing source code
+- Understanding current behavior before refactoring
+- Documenting legacy code
+- Preparing for migration
+- Explaining business logic from source
+- Creating handover documentation
+- Creating specs for VB.NET, Java, BHT BASIC, JavaScript, TypeScript, SQL, batch files, or server configuration
+
+## Do Not Use This Skill For
+
+- Code implementation
+- Refactoring
+- Bug fixes
+- Test creation
+- HTML artifact checking
+- Unknown-only extraction
+
+For unknown-only extraction, use the `unknown-list-extractor` skill behavior.
+
+## Inputs To Check
+
+- Source files related to the requested feature
+- README and existing docs
+- `memory-bank/projectbrief.md`
+- `memory-bank/activeContext.md`
+- `memory-bank/techContext.md`
+- `memory-bank/progress.md`
+- `docs/ai/glossary.md`
+- `docs/ai/active-context.md`
+- `docs/ai/adr/`
+
+## Output Location
+
+Write specs under:
+
+```txt
+docs/specs/
+```
+
+Recommended filename:
+
+```txt
+docs/specs/<feature-name>.md
+```
+
+## Spec Template
+
+Use this structure:
+
+```md
+# <Feature Name> Specification
+
+## 1. Overview
+## 2. Source Files Reviewed
+## 3. Current Behavior
+## 4. User Flow
+## 5. Inputs
+## 6. Outputs
+## 7. Data Model
+## 8. Validation Rules
+## 9. Error Handling
+## 10. External Dependencies
+## 11. Edge Cases
+## 12. Known Unknowns
+## 13. Business Rules
+## 14. Notes For Future Implementation
+```
+
+## Evidence Rules
+
+- Cite file paths and function/class names when possible.
+- Mark uncertain behavior as `Unknown`.
+- Do not invent requirements that are not visible in source or docs.
+- Separate observed behavior from inferred intent.
+
+## Final Response
+
+Report:
+
+- Spec file created or updated
+- Files reviewed
+- Unknowns found
+- Recommended next step
+
