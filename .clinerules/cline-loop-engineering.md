@@ -28,6 +28,13 @@ These rules are always active for this workspace.
 - Use `/review-loop` when reviewing current diffs without making changes.
 - Use `/html-artifact-checker` when checking HTML artifacts against specs, source behavior, fields, flows, validations, errors, and edge cases.
 - Use `/memory-bank-updater` after meaningful planning, implementation, review, or decisions that should persist.
+- Use `/git-commit-workflow` when creating a local featureBranch, staging intended files, committing there, and pushing to the matching remote featureBranch.
+- Use `/loop-budget` when a task needs explicit iteration, time, tool, verification, or stop-condition limits.
+- Use `/loop-triage` when issues, CI failures, unknowns, review findings, or task lists need priority and next-action classification.
+- Use `/loop-verifier` after a loop claims completion and an independent APPROVE / REJECT / ESCALATE_HUMAN decision is needed.
+- Use `/daily-triage` for report-only daily or sprint scans across CI, issues, PRs, commits, unknowns, and project state.
+- Use `/issue-triage` for report-only issue, feature request, discussion, duplicate, priority, and label proposal workflows.
+- Use `/template-commit-workflow` when committing and pushing Cline template files such as `.cline/skills/`, `.clinerules/`, `README.md`, `docs/`, or `memory-bank/`.
 
 ## Planning And Clarification
 
@@ -36,6 +43,7 @@ These rules are always active for this workspace.
 - If uncertainty can be listed independently, record it with `/unknown-list-extractor`.
 - Mark unresolved requirements as `Unknown`; do not guess.
 - Separate confirmed decisions from assumptions.
+- Start new loop patterns in report-only mode before enabling implementation, labeling, closing, merging, or pushing.
 
 ## Documentation Rules
 
@@ -64,6 +72,7 @@ These rules are always active for this workspace.
 - Focus on correctness, regressions, missing tests, spec violations, and delivery risk.
 - Do not report speculative issues without evidence.
 - If no issues are found, say so clearly and note remaining test gaps or residual risks.
+- Use `/loop-verifier` when the result needs an explicit approval decision rather than a normal review summary.
 
 ## Memory Bank Rules
 
@@ -80,3 +89,5 @@ These rules are always active for this workspace.
 - Do not delete or reset files unless explicitly requested.
 - When a task touches GitHub publishing, inspect `git status` and avoid staging unrelated changes.
 - Prefer explicit file paths when staging changes.
+- For Git commits and pushes, use `/git-commit-workflow`; default to local featureBranch -> remote featureBranch, and never force push or run destructive Git commands without explicit approval.
+- For template-only Git work, use `/template-commit-workflow`; default to `feature#template#<number>` and stage only template-scope files.
