@@ -4,24 +4,22 @@
 
 基本的には、Clineのチャット入力で `/` を入力し、対象Skillを選んでから依頼文を続けます。
 
+`.clinerules/workflows/` のWorkflowは複数Skillを条件付きでつなぐ入口です。Workflowは `/ファイル名.md` で実行し、同名の親Skillが判定基準と詳細手順を提供します。
+
+Workflowごとの使用例は [workflows/README.md](workflows/README.md) を参照してください。
+
 ## 基本フロー
 
 ```txt
-/legacy-source-spec-writer
+/adaptive-deep-planning.md
   ↓
-/unknown-list-extractor
+/context-window-management.md（長時間・複雑な場合）
   ↓
-/daily-triage
-  ↓
-/issue-triage
-  ↓
-/grill-with-docs
-  ↓
-/implementation-loop
+選択された調査・要件整理・実装Skill
   ↓
 /review-loop
   ↓
-/html-artifact-checker
+/artifact-quality-gate.md
   ↓
 /loop-verifier
   ↓
@@ -36,6 +34,11 @@
 
 | Skill | 用途 | 主な出力 |
 |---|---|---|
+| `/adaptive-deep-planning` | 依頼を分類して必要な計画ルートとSkillを選ぶ | `docs/planning/`、選択ルート、次のアクション |
+| `/artifact-quality-gate` | 生成成果物を分類して品質判定する | `docs/quality/artifact-quality-report.md` |
+| `/ai-learning-curator` | 作業から再利用可能な学習を抽出・評価・昇格する | `docs/ai/learnings/`、`memory-bank/`、ADR、rule、Skill |
+| `/harness-engineering-loop` | 成果物反復の環境・観測・評価・予算・学習を設計する | Loop contract、iteration log、harness improvements |
+| `/context-window-manager` | 長時間作業の文脈を選別、段階読込、Checkpoint、再構成する | Context Contract、Context Checkpoint、handoff packet |
 | `/cline-skill-builder` | Cline Skillの作成・変換・改善・レビュー | `.cline/skills/<name>/SKILL.md` |
 | `/legacy-source-spec-writer` | 既存ソースから仕様書を作る | `docs/specs/<feature-name>.md` |
 | `/unknown-list-extractor` | 不明点・確認事項を抽出する | `docs/ai/unknowns/YYYYMMDD-<topic>-unknowns.md` |
@@ -51,6 +54,152 @@
 | `/memory-bank-updater` | 長期文脈と進捗を更新する | `memory-bank/*.md` |
 | `/template-commit-workflow` | Clineテンプレート変更をfeatureBranchでcommit/pushする | `feature#template#<number>` branch |
 | `/git-commit-workflow` | featureBranchでcommit/pushする | `feature#<name>#<number>` branch |
+
+## Workflow一覧
+
+| Workflow | 配置 | 呼び出す主なSkill |
+|---|---|---|
+| `/adaptive-deep-planning.md` | `.clinerules/workflows/adaptive-deep-planning.md` | `grill-with-docs`、`unknown-list-extractor`、`legacy-source-spec-writer`、`review-loop`、`implementation-loop` |
+| `/artifact-quality-gate.md` | `.clinerules/workflows/artifact-quality-gate.md` | `html-artifact-checker`、`review-loop`、`loop-verifier`、`implementation-loop`、`memory-bank-updater` |
+| `/continuous-project-learning.md` | `.clinerules/workflows/continuous-project-learning.md` | `ai-learning-curator`、`memory-bank-updater`、`cline-skill-builder` |
+| `/harness-engineering-loop.md` | `.clinerules/workflows/harness-engineering-loop.md` | `harness-engineering-loop`、`loop-budget`、`artifact-quality-gate`、`loop-verifier` |
+| `/context-window-management.md` | `.clinerules/workflows/context-window-management.md` | `context-window-manager`、`memory-bank-updater`、`artifact-quality-gate`、`loop-verifier` |
+
+## `/context-window-manager`
+
+### 使うタイミング
+
+- 長時間、複数モジュール、複数Skillの作業を行う
+- 会話、ログ、調査結果が増え、古い前提が混ざりそう
+- 作業を再開・引き継ぎする
+- 同じ情報を再検索する、判断根拠を追えないなどの兆候がある
+
+### 使用例
+
+```txt
+/context-window-management.md
+
+最新の依頼からContext Contractを作成してください。
+必要な資料だけを段階的に読み、工程境界で根拠付きCheckpointを更新してください。
+圧縮後は正本とGit差分と検証結果を再確認してください。
+```
+
+### 期待する出力
+
+- Context Contract
+- 文脈の選別結果
+- 根拠パス付きContext Checkpoint
+- Unknown、矛盾、次の1アクション
+- 再開・引き継ぎ用パケット
+
+## `/adaptive-deep-planning`
+
+### 使うタイミング
+
+- 依頼が曖昧、または変更規模がまだ分からない
+- 複数ファイル・複数層に影響する機能開発や移行を計画したい
+- 既存の計画やタスクを再利用し、必要な工程だけ実行したい
+
+### 使用例
+
+```txt
+/adaptive-deep-planning
+
+この機能追加について、要件の明確さと変更規模を分類してください。
+必要な調査・要件整理・計画・タスク分割だけを実行し、計画承認前は実装しないでください。
+```
+
+### 期待する出力
+
+- 要件の明確さと変更規模
+- 選択ルートとスキップ理由
+- 必要な `docs/planning/` の成果物
+- 仮定、Unknown、Blocking Question、次のアクション
+
+## `/artifact-quality-gate`
+
+### 使うタイミング
+
+- Markdown、HTML、Excel、YAML、SQL、コード、テスト、図の完成判定をしたい
+- 要件網羅性、既存仕様との整合、根拠、構文、自動テストをまとめて確認したい
+- 問題を限定修正して再チェックしたい
+
+### 使用例
+
+```txt
+/artifact-quality-gate
+
+今回生成した成果物を分類し、要件対応表と自動検証結果を含む品質レポートを作成してください。
+CriticalまたはMajorが残る場合は完了扱いにしないでください。
+```
+
+### 期待する出力
+
+```txt
+docs/quality/artifact-quality-report.md
+Quality Gate: PASS | PASS WITH MINOR FIXES | NEEDS REVISION | FAIL
+```
+
+## `/ai-learning-curator`
+
+### 使うタイミング
+
+- 作業後に、次回も使える判断や手順を残したい
+- 同じ失敗やユーザーからの訂正が繰り返された
+- 新しいルールやSkillへ昇格すべき知識を整理したい
+- memory-bank、用語集、ADR、ルールの内容が古くなっていないか確認したい
+
+### 使用例
+
+```txt
+/ai-learning-curator
+
+今回の実装、レビュー、テスト結果、ユーザーからの訂正を振り返ってください。
+再利用できる学習だけを抽出し、根拠、Confidence、適用範囲、保存先を評価してください。
+未検証の内容はルールやSkillへ昇格しないでください。
+```
+
+### 期待する出力
+
+- 学習候補の評価表
+- `Promote / Keep Candidate / Reject / Replace` の判定
+- `docs/ai/learnings/YYYYMMDD-<topic>.md`
+- 必要な `memory-bank/`、用語集、ADR、`.clinerules/`、Skillの更新
+- 次回の検証条件
+
+### `memory-bank-updater`との違い
+
+- `/memory-bank-updater`: 現在の文脈、進捗、技術情報を整理する
+- `/ai-learning-curator`: 作業結果を評価し、将来も再利用できる知識だけを昇格させる
+
+## `/harness-engineering-loop`
+
+### 使うタイミング
+
+- 成果物を複数回のループで完成させたい
+- 同じ失敗が繰り返され、環境や検証方法の改善が必要
+- 反復回数、時間、停止条件を管理したい
+- 性能や信頼性を計測しながら改善したい
+
+### 使用例
+
+```txt
+/harness-engineering-loop.md
+
+この成果物を最大3イテレーションで完成させてください。
+各回で最優先の未達項目を1つだけ修正し、観測結果と品質判定を記録してください。
+同じ失敗が続く場合は実装を再試行せず、不足しているハーネスを改善してください。
+```
+
+### 期待する出力
+
+- Loop contractと予算
+- イテレーション記録
+- build、test、品質・性能の観測結果
+- 失敗のGap分類
+- 改善した環境、文脈、ツール、観測、制約、評価器
+- 品質ゲートと独立検証の最終判定
+- 継続学習へ渡す内容
 
 ## `/cline-skill-builder`
 

@@ -11,15 +11,24 @@ These rules are always active for this workspace.
 ## Core Operating Model
 
 - Use `.cline/skills/` for repeatable task-specific workflows.
+- Use `.clinerules/workflows/` for slash-command workflows that coordinate multiple Skills and conditional routes.
 - Use `.clinerules/` only for always-on project rules.
 - Use `memory-bank/` for durable project context across sessions.
 - Use `docs/ai/` for AI-facing context, terminology, decisions, ADRs, and unknowns.
 - Use `docs/specs/` for source-derived specifications.
 - Use `docs/reviews/` for review results.
 - Do not put large workflow instructions directly into `.clinerules/`; create or update a Skill instead.
+- Keep files in `.clinerules/workflows/` focused on orchestration; keep detailed reusable checks in `.cline/skills/`.
 
 ## Skill Selection
 
+- Use `/context-window-manager` when a task is long-running, crosses multiple modules or Skills, requires repeated iterations, is being resumed or handed off, or shows signs of stale, duplicated, or conflicting context.
+- Use `/context-window-management.md` before and during complex work to establish a Context Contract, load evidence progressively, create checkpoints, and refresh from authoritative sources.
+- Use `/adaptive-deep-planning` as the parent planning Skill when request clarity, change size, investigation depth, or task decomposition must be decided.
+- Use `/artifact-quality-gate` after generating implementation or documentation artifacts when completion requires coverage, correctness, traceability, format, and automated validation checks.
+- Use `/ai-learning-curator` after meaningful corrections, repeated failures, validated improvements, or completed workflows when reusable project learning should be evaluated and promoted.
+- Use `/continuous-project-learning.md` after quality validation when reusable learning should become memory, ADRs, regression tests, performance baselines, rules, or Skills.
+- Use `/harness-engineering-loop.md` when an artifact needs bounded repeated implementation, observation, evaluation, diagnosis, and harness improvement before completion.
 - Use `/cline-skill-builder` when creating, converting, improving, or reviewing Cline Skills.
 - Use `/legacy-source-spec-writer` when turning existing source code into Markdown specifications.
 - Use `/unknown-list-extractor` when extracting unknowns, ambiguities, assumptions, risks, or confirmation items.
@@ -57,6 +66,8 @@ These rules are always active for this workspace.
 
 ## Implementation Rules
 
+- For complex work, keep only the current contract, relevant evidence, unresolved items, latest verification, and next action in the active working set; retrieve other details from authoritative files when needed.
+- Re-check the latest user request, source files, Git diff, and verification results after a checkpoint, resume, handoff, or context compression.
 - Read relevant `memory-bank/`, `docs/ai/`, and `docs/specs/` files before implementing.
 - Keep implementation changes minimal and scoped.
 - Prefer existing project patterns over new abstractions.
@@ -81,6 +92,7 @@ These rules are always active for this workspace.
 - Update `memory-bank/techContext.md` when technical constraints, commands, architecture, or conventions change.
 - Update `memory-bank/projectbrief.md` only for stable project purpose or scope changes.
 - Keep memory entries concise; do not paste raw logs, large diffs, secrets, or temporary scratch notes.
+- Do not promote unverified observations into permanent rules or Skills; evaluate them with `/ai-learning-curator` first.
 
 ## Safety Rules
 
