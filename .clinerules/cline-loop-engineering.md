@@ -29,6 +29,7 @@ These rules are always active for this workspace.
 - For the complete source-to-HTML-to-XLSM flow, invoke `/source-to-verified-xlsm.md`; use `/source-to-xlsm-template.md` only when the HTML and mapping inputs are already ready.
 - For large PDF evidence, invoke `/pdf-context-conversion.md`, read its index first, and load only relevant chunks; keep the original PDF as the source of truth.
 - For Teams completion alerts, invoke `/teams-completion-notification.md` only after its plan or implementation completion gates pass; never store the webhook URL in repository files.
+- Teams notifications are opt-in per Workflow run. Treat an unspecified choice as disabled, never persist consent implicitly, and require `--notification-choice enabled` before sending.
 - For template Git publication, use Skill `template-commit-workflow`; use Skill `git-commit-workflow` for other feature-branch commits.
 - Use a parent Workflow when several Skills must run in a fixed order. Otherwise, describe the task naturally and allow Cline to activate the matching Skill.
 

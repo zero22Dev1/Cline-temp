@@ -89,3 +89,4 @@ Workflowの使用例は [docs/workflows/README.md](docs/workflows/README.md) を
 - 実装前に曖昧な仕様を潰す
 - 実装後は必ず差分レビューする
 - HTML成果物は仕様・既存挙動との対応漏れを確認する
+- Teams通知はWorkflow実行ごとの選択制とし、`Teams通知: 有効`が明示されない場合は通知しない

@@ -2,6 +2,15 @@
 
 Clineの計画または実装が品質確認まで完了した時だけMicrosoft Teamsへ通知する。
 
+## Notification Choice
+
+Workflow開始時に次を選択する。
+
+- `有効`: 今回のWorkflowが完了条件を満たした場合だけTeamsへ通知する
+- `無効`: Teamsへ通知しない
+
+ユーザーが選択していない場合は`無効`とする。選択は今回の実行だけに適用し、次回へ引き継がない。`有効`の場合だけ以降の通知処理を実行する。
+
 ## Mode: Plan
 
 1. `/adaptive-deep-planning.md`で計画を作成する。
@@ -19,9 +28,18 @@ Clineの計画または実装が品質確認まで完了した時だけMicrosoft
 5. Skill `loop-verifier`が`APPROVE`であることを確認する。
 6. すべてPASSの場合だけSkill `teams-completion-notifier`を`implementation`モードで実行する。
 
+## Mode: Workflow
+
+1. 呼び出し元Workflow固有の完了条件を確認する。
+2. 必要な成果物を`/artifact-quality-gate.md`で検証する。
+3. Skill `loop-verifier`が`APPROVE`であることを確認する。
+4. 必須検証の`NOT RUN`、Blocking事項、Critical／Majorがないことを確認する。
+5. すべてPASSの場合だけSkill `teams-completion-notifier`を`workflow`モードで実行する。
+
 ## Rules
 
 - Webhook URLは`TEAMS_WORKFLOW_WEBHOOK_URL`からだけ取得する。
+- Python実行時に`--notification-choice enabled`を渡す。`disabled`では送信しない。
 - `PASS WITH MINOR FIXES`、`NOT RUN`、`Needs Revision`、`Blocked`では通知しない。
 - dry-runを通知完了として扱わない。
 - TeamsがHTTP 2xxを返した場合だけ通知完了とする。

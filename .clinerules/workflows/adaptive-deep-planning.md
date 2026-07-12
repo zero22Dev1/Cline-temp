@@ -2,6 +2,10 @@
 
 開発依頼を分類し、必要なCline Skillだけを選んで、調査・計画・レビュー・実装引き継ぎまで進める。
 
+## Teams Notification Option
+
+開始時に`Teams通知: 有効 / 無効`を選択する。未指定は`無効`とし、今回の実行だけに適用する。`有効`の場合でもPlan Reviewと計画品質ゲートがPASSした時だけ`/teams-completion-notification.md`へ進む。
+
 ## Workflow Rules
 
 - 最初から実装しない。

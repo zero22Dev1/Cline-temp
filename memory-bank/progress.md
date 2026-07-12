@@ -31,6 +31,9 @@
 - Remediated portfolio findings by separating Skill activation from Workflow slash commands, removing builder/evaluator trigger overlap, adding learning evaluation gates, expanding template commit scope, standardizing REQ-ID traceability, and adding XLSM contract verification tests.
 - Added `pdf-context-converter` and `/pdf-context-conversion.md` to convert large PDFs into an index, page-status metadata, chunked Markdown, and optional semantic HTML for selective context loading.
 - Added `teams-completion-notifier` and `/teams-completion-notification.md` for gated Microsoft Teams Workflows notifications after plan quality approval or implementation, tests, review, quality gate, and independent verification complete.
+- Made Teams completion notifications opt-in per Workflow run across all Workflows, defaulting to disabled and requiring explicit Python-side consent before sending.
+- Added the Teams notifier `workflow` mode and wired non-code Workflows to notify only after their specific completion gate, quality PASS, and independent APPROVE decision.
+- Expanded `docs/workflows/README.md` with use cases, non-use cases, completion gates, Teams modes, quick selection guidance, and invocation examples for all Workflows.
 
 ## Pending
 

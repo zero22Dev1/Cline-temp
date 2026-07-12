@@ -2,6 +2,10 @@
 
 既存ソースを正本としてHTMLモックとマクロ付きExcelを生成し、処理内容の欠落・矛盾がないことを独立検証する。
 
+## Teams Notification Option
+
+開始時に`Teams通知: 有効 / 無効`を選択する。未指定は`無効`とし、今回の実行だけに適用する。`有効`の場合でもHTML、XLSM、追跡性、品質ゲート、独立検証がすべてPASSした時だけ通知する。
+
 このファイルはCline Custom Workflowとして`/source-to-verified-xlsm.md`で実行する。詳細処理は`.cline/skills/`のSkillを必要な段階で読み込む。
 
 ## Workflow Rules
@@ -127,6 +131,8 @@ Source Evidence
 - Skill `loop-verifier`が`APPROVE`
 
 完了後はSkill `memory-bank-updater`を実行する。再利用可能な欠落パターン、抽出規則、検査改善は`/continuous-project-learning.md`へ渡す。
+
+`Teams通知: 有効`の場合、上記完了条件をすべて満たした後に`/teams-completion-notification.md`を`workflow`モードで実行する。通知証跡には最終品質レポートとTraceability Matrixを指定する。
 
 ## Final Output
 

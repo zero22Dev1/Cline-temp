@@ -17,6 +17,8 @@ from pathlib import Path
 
 def validate_gates(args: argparse.Namespace) -> list[str]:
     failures = []
+    if args.notification_choice != "enabled":
+        failures.append("notification-choice must be enabled")
     if args.quality_result != "PASS":
         failures.append("quality-result must be PASS")
     if not args.evidence or not all(path.is_file() for path in args.evidence):
@@ -24,12 +26,14 @@ def validate_gates(args: argparse.Namespace) -> list[str]:
     if args.mode == "plan":
         if args.plan_review not in {"Ready", "Ready with Assumptions"}:
             failures.append("plan-review must be Ready or Ready with Assumptions")
-    else:
+    elif args.mode == "implementation":
         for name in ("build_result", "test_result", "review_result"):
             if getattr(args, name) != "PASS":
                 failures.append(f"{name.replace('_', '-')} must be PASS")
         if args.verifier_result != "APPROVE":
             failures.append("verifier-result must be APPROVE")
+    elif args.verifier_result != "APPROVE":
+        failures.append("verifier-result must be APPROVE")
     return failures
 
 
@@ -40,7 +44,7 @@ def event_id(args: argparse.Namespace) -> str:
 
 
 def build_payload(args: argparse.Namespace, notification_id: str) -> dict:
-    mode_label = "計画" if args.mode == "plan" else "実装"
+    mode_label = {"plan": "計画", "implementation": "実装", "workflow": "Workflow"}[args.mode]
     lines = [
         f"Cline {mode_label}完了: {args.title}",
         args.summary,
@@ -48,13 +52,15 @@ def build_payload(args: argparse.Namespace, notification_id: str) -> dict:
     ]
     if args.mode == "plan":
         lines.append(f"Plan Review: {args.plan_review}")
-    else:
+    elif args.mode == "implementation":
         lines.extend([
             f"Build: {args.build_result}",
             f"Test: {args.test_result}",
             f"Review: {args.review_result}",
             f"Verifier: {args.verifier_result}",
         ])
+    else:
+        lines.append(f"Verifier: {args.verifier_result}")
     lines.append(f"Notification ID: {notification_id}")
     return {"text": "\n".join(lines)}
 
@@ -108,7 +114,8 @@ def already_sent(path: Path, notification_id: str) -> bool:
 
 def parse_args(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mode", required=True, choices=("plan", "implementation"))
+    parser.add_argument("--mode", required=True, choices=("plan", "implementation", "workflow"))
+    parser.add_argument("--notification-choice", required=True, choices=("enabled", "disabled"))
     parser.add_argument("--title", required=True)
     parser.add_argument("--summary", required=True)
     parser.add_argument("--quality-result", required=True, choices=("PASS", "PASS WITH MINOR FIXES", "NEEDS REVISION", "FAIL", "NOT RUN"))

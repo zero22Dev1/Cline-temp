@@ -2,6 +2,10 @@
 
 生成または実装した成果物を、種類に応じた検証へ振り分け、完了可能か判定する。
 
+## Teams Notification Option
+
+開始時に`Teams通知: 有効 / 無効`を選択する。未指定は`無効`とし、今回の実行だけに適用する。`有効`でも、この品質ゲートに加えてモード固有の完了条件を満たした時だけ通知する。
+
 ## Workflow Rules
 
 - 成果物を生成できただけでは完了扱いにしない。
@@ -130,4 +134,4 @@ Quality Gate: FAIL
 
 PASS後に Skill `memory-bank-updater` を実行する。再利用可能な訂正、失敗パターン、設計判断、性能測定、検証済みの改善がある場合は `/continuous-project-learning.md` へ進み、その後必要に応じて Skill `template-commit-workflow` または Skill `git-commit-workflow` へ進む。
 
-Teams完了通知が設定されている場合、計画成果物はPlan Reviewの実装可能判定を確認して`/teams-completion-notification.md`の`plan`モードへ進む。ソースコード成果物は必須テスト、Skill `review-loop`、Skill `loop-verifier`までPASSしたことを確認して`implementation`モードへ進む。品質ゲート単体のPASSだけでは送信しない。
+`Teams通知: 有効`の場合、計画成果物はPlan Reviewの実装可能判定を確認して`/teams-completion-notification.md`の`plan`モードへ進む。ソースコード成果物は必須テスト、Skill `review-loop`、Skill `loop-verifier`までPASSしたことを確認して`implementation`モードへ進む。その他の成果物はWorkflow固有の完了条件とSkill `loop-verifier`の`APPROVE`を確認して`workflow`モードへ進む。品質ゲート単体のPASSだけでは送信しない。

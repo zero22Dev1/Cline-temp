@@ -1,5 +1,9 @@
 # Source To XLSM Template Workflow
 
+## Teams Notification Option
+
+開始時に`Teams通知: 有効 / 無効`を選択する。未指定は`無効`とし、今回の実行だけに適用する。`有効`の場合でもXLSM生成、実テンプレート検証、品質ゲートがPASSした時だけ通知する。
+
 既存ソースからHTMLモック画面を生成し、`<section>`ごとに文字またはHTMLレンダリング画像をマクロ付きExcelテンプレートへ出力する。
 
 ## Step 1: Confirm Inputs
@@ -38,6 +42,8 @@ HTMLの各`<section>`に一意な`id`を付け、`text / image / image-and-text`
 必要に応じて`/artifact-quality-gate.md`で帳票内容を検証する。マクロ動作が完了条件の場合は、信頼済みWindows版Excelで確認する。
 
 synthetic fixtureの単体テストだけでは実テンプレートの合格根拠にしない。実テンプレート検証を実行できない場合は`NOT RUN`とし、最終判定は最大`NEEDS_REVISION`とする。
+
+実テンプレート検証後に`/artifact-quality-gate.md`とSkill `loop-verifier`を実行する。`Teams通知: 有効`かつQuality Gateが`PASS`、Skill `loop-verifier`が`APPROVE`の場合だけ、`/teams-completion-notification.md`を`workflow`モードで実行する。
 
 ## Step 5: Report
 

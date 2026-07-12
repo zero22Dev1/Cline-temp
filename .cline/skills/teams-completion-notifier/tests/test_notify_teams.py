@@ -18,11 +18,12 @@ def arguments(root, mode="plan"):
     evidence.write_text("verified", encoding="utf-8")
     return Namespace(
         mode=mode, title="Task", summary="Done", quality_result="PASS",
+        notification_choice="enabled",
         plan_review="Ready" if mode == "plan" else None,
         build_result="PASS" if mode == "implementation" else None,
         test_result="PASS" if mode == "implementation" else None,
         review_result="PASS" if mode == "implementation" else None,
-        verifier_result="APPROVE" if mode == "implementation" else None,
+        verifier_result="APPROVE" if mode in {"implementation", "workflow"} else None,
         evidence=[evidence], receipt=root / "receipt.json", dry_run=False,
     )
 
@@ -34,11 +35,24 @@ class TeamsCompletionNotifierTest(unittest.TestCase):
             args.plan_review = "Needs Revision"
             self.assertIn("plan-review", " ".join(MODULE.validate_gates(args)))
 
+    def test_disabled_choice_rejects_notification(self):
+        with tempfile.TemporaryDirectory() as temp:
+            args = arguments(Path(temp))
+            args.notification_choice = "disabled"
+            self.assertIn("notification-choice", " ".join(MODULE.validate_gates(args)))
+
     def test_implementation_requires_test_pass(self):
         with tempfile.TemporaryDirectory() as temp:
             args = arguments(Path(temp), "implementation")
             args.test_result = "NOT RUN"
             self.assertIn("test-result", " ".join(MODULE.validate_gates(args)))
+
+    def test_workflow_requires_verifier_approval_without_code_gates(self):
+        with tempfile.TemporaryDirectory() as temp:
+            args = arguments(Path(temp), "workflow")
+            self.assertEqual([], MODULE.validate_gates(args))
+            args.verifier_result = "REJECT"
+            self.assertIn("verifier-result", " ".join(MODULE.validate_gates(args)))
 
     def test_payload_does_not_contain_webhook(self):
         with tempfile.TemporaryDirectory() as temp:
