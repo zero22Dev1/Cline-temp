@@ -1,7 +1,5 @@
 # Cline向け構成一覧
 
-Source chat: https://chatgpt.com/share/6a4a39d4-6dd4-83ee-ad94-f70eaa58b7dd
-
 ## 目的
 
 この一覧は、共有チャット「Cline Loop Engineering」の内容をClineに導入しやすい形で整理したものです。
@@ -45,28 +43,28 @@ Source chat: https://chatgpt.com/share/6a4a39d4-6dd4-83ee-ad94-f70eaa58b7dd
 
 ## Cline Skill一覧
 
-| Slash command | 配置 | 役割 | 主な出力 | 優先度 |
-|---|---|---|---|---|
-| `/cline-skill-builder` | `.cline/skills/cline-skill-builder/SKILL.md` | Cline用Skillを作成・変換・改善・レビューするメタSkill | 新規Skill案、変換済みSKILL.md、レビュー結果 | 高 |
-| `/legacy-source-spec-writer` | `.cline/skills/legacy-source-spec-writer/SKILL.md` | 既存ソースから現在の仕様をMarkdown化する | `docs/specs/<feature-name>.md` | 高 |
-| `/unknown-list-extractor` | `.cline/skills/unknown-list-extractor/SKILL.md` | 仕様不明点、曖昧さ、前提、リスク、確認事項を抽出する | `docs/ai/unknowns/YYYYMMDD-<topic>-unknowns.md` | 高 |
-| `/html-artifact-checker` | `.cline/skills/html-artifact-checker/SKILL.md` | HTML成果物が仕様・既存挙動を漏れなく反映しているか確認する | `docs/reviews/YYYYMMDD-<artifact-name>-html-check.md` | 高 |
-| `/grill-with-docs` | `.cline/skills/grill-with-docs/SKILL.md` | 実装前に1問ずつ質問し、要件・用語・判断・受け入れ条件を詰める | `memory-bank/`, `docs/ai/` | 中 |
-| `/implementation-loop` | `.cline/skills/implementation-loop/SKILL.md` | `memory-bank/` と `docs/ai/` を読んで最小差分で実装する | ソース差分、build/test結果、git diff確認 | 中 |
-| `/review-loop` | `.cline/skills/review-loop/SKILL.md` | 現在の差分を実装せずにレビューする | リスク、テスト不足、仕様破壊、不要変更の指摘 | 中 |
-| `/memory-bank-updater` | `.cline/skills/memory-bank-updater/SKILL.md` | 長期文脈を軽量に更新する | `memory-bank/*.md` | 低 |
+| Slash command                | 配置                                               | 役割                                                          | 主な出力                                              | 優先度 |
+| ---------------------------- | -------------------------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------- | ------ |
+| `/cline-skill-builder`       | `.cline/skills/cline-skill-builder/SKILL.md`       | Cline用Skillを作成・変換・改善・レビューするメタSkill         | 新規Skill案、変換済みSKILL.md、レビュー結果           | 高     |
+| `/legacy-source-spec-writer` | `.cline/skills/legacy-source-spec-writer/SKILL.md` | 既存ソースから現在の仕様をMarkdown化する                      | `docs/specs/<feature-name>.md`                        | 高     |
+| `/unknown-list-extractor`    | `.cline/skills/unknown-list-extractor/SKILL.md`    | 仕様不明点、曖昧さ、前提、リスク、確認事項を抽出する          | `docs/ai/unknowns/YYYYMMDD-<topic>-unknowns.md`       | 高     |
+| `/html-artifact-checker`     | `.cline/skills/html-artifact-checker/SKILL.md`     | HTML成果物が仕様・既存挙動を漏れなく反映しているか確認する    | `docs/reviews/YYYYMMDD-<artifact-name>-html-check.md` | 高     |
+| `/grill-with-docs`           | `.cline/skills/grill-with-docs/SKILL.md`           | 実装前に1問ずつ質問し、要件・用語・判断・受け入れ条件を詰める | `memory-bank/`, `docs/ai/`                            | 中     |
+| `/implementation-loop`       | `.cline/skills/implementation-loop/SKILL.md`       | `memory-bank/` と `docs/ai/` を読んで最小差分で実装する       | ソース差分、build/test結果、git diff確認              | 中     |
+| `/review-loop`               | `.cline/skills/review-loop/SKILL.md`               | 現在の差分を実装せずにレビューする                            | リスク、テスト不足、仕様破壊、不要変更の指摘          | 中     |
+| `/memory-bank-updater`       | `.cline/skills/memory-bank-updater/SKILL.md`       | 長期文脈を軽量に更新する                                      | `memory-bank/*.md`                                    | 低     |
 
 ## Skillではないが必要な領域
 
-| 領域 | 用途 | メモ |
-|---|---|---|
-| `.clinerules/` | 常時守るプロジェクトルール | Skillに詰め込みすぎない |
-| `memory-bank/` | 長期文脈、現在の作業状態、技術背景、進捗 | 実装前後に更新する |
-| `docs/ai/` | AI作業用の用語、判断、ADR、active context | 仕様判断の根拠置き場 |
-| `docs/specs/` | 既存ソースから作った仕様書 | `legacy-source-spec-writer` の主出力 |
-| `docs/ai/unknowns/` | 確認が必要な不明点リスト | `unknown-list-extractor` の主出力 |
-| `docs/reviews/` | HTML成果物や差分のレビュー結果 | `html-artifact-checker` の主出力 |
-| `README.md` | Cline運用ルールと推奨手順の入口 | チーム共有用 |
+| 領域                | 用途                                      | メモ                                 |
+| ------------------- | ----------------------------------------- | ------------------------------------ |
+| `.clinerules/`      | 常時守るプロジェクトルール                | Skillに詰め込みすぎない              |
+| `memory-bank/`      | 長期文脈、現在の作業状態、技術背景、進捗  | 実装前後に更新する                   |
+| `docs/ai/`          | AI作業用の用語、判断、ADR、active context | 仕様判断の根拠置き場                 |
+| `docs/specs/`       | 既存ソースから作った仕様書                | `legacy-source-spec-writer` の主出力 |
+| `docs/ai/unknowns/` | 確認が必要な不明点リスト                  | `unknown-list-extractor` の主出力    |
+| `docs/reviews/`     | HTML成果物や差分のレビュー結果            | `html-artifact-checker` の主出力     |
+| `README.md`         | Cline運用ルールと推奨手順の入口           | チーム共有用                         |
 
 ## 推奨実行順
 
@@ -176,4 +174,3 @@ Clineで既存ソース解析、仕様整理、実装、レビューを安全に
 6. `implementation-loop`
 7. `review-loop`
 8. `memory-bank-updater`
-
