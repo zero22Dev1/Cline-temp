@@ -26,10 +26,10 @@
 ```txt
 /adaptive-deep-planning.md
   -> /context-window-management.md
-  -> /implementation-loop
+  -> Skill implementation-loop
   -> Context Checkpoint
   -> /artifact-quality-gate.md
-  -> /loop-verifier
+  -> Skill loop-verifier
 ```
 
 ## 期待する出力

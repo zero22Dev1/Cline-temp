@@ -64,7 +64,7 @@ HTML成果物を仕様どおりに完成させてください。
 - 必須のbuild、lint、test、計測がPASS
 - Critical、Majorが残っていない
 - 性能基準が同一条件で達成されている
-- `/loop-verifier`が`APPROVE`
+- Skill `loop-verifier`が`APPROVE`
 - 学習が `/continuous-project-learning.md`へ引き継がれている
 
 ## 注意点

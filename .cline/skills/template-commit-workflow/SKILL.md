@@ -23,14 +23,17 @@ Do not commit directly to `main` unless the user explicitly requests it.
 
 Template files commonly include:
 
-- `.cline/skills/**/SKILL.md`
+- `.cline/skills/**` including `SKILL.md`, `scripts/`, `tests/`, `references/`, `docs/`, `templates/`, and `assets/`
 - `.clinerules/**`
+- `.clineignore`
 - `README.md`
 - `docs/skills-usage.md`
+- `docs/workflows/**`
 - `docs/ai/**`
 - `docs/specs/**`
 - `docs/reviews/**`
 - `memory-bank/**`
+- `templates/**`
 - `outputs/**` when the output is part of the template deliverable
 
 Do not include unrelated application source, secrets, local environment files, build artifacts, or editor cache files.
@@ -62,15 +65,16 @@ When selecting `<number>`, inspect existing local and remote branches with the s
    - `git diff`
    - `git diff --staged`
 3. Confirm changes are template-scope files.
-4. If unrelated files exist, ask which files should be included.
-5. Confirm or choose the feature branch.
-6. If on `main`, create a branch:
+4. Inspect untracked files under every changed Skill directory so support files are not omitted.
+5. If unrelated files exist, ask which files should be included.
+6. Confirm or choose the feature branch.
+7. If on `main`, create a branch:
    - `git switch -c feature#template#<number>`
-7. If already on the intended feature branch, stay there.
-8. Stage only intended template files with explicit paths.
-9. Re-check `git status -sb`.
-10. Commit with a concise template-focused message.
-11. Push to the matching remote feature branch:
+8. If already on the intended feature branch, stay there.
+9. Stage only intended template files with explicit paths. For a changed Skill, stage the intended Skill directory rather than only its `SKILL.md`.
+10. Re-check `git status -sb` and confirm no intended support file remains untracked or unstaged.
+11. Commit with a concise template-focused message.
+12. Push to the matching remote feature branch:
    - `git push -u origin feature#template#<number>`
 
 ## Suggested Commit Messages
@@ -98,10 +102,13 @@ changes
 Check:
 
 - Each new Skill has `.cline/skills/<name>/SKILL.md`.
+- Every referenced `scripts/`, `tests/`, `references/`, `docs/`, `templates/`, and `assets/` file exists and is included when intended.
 - Each `SKILL.md` has only `name` and `description` frontmatter.
 - Skill directory name matches the `name`.
 - README and `docs/skills-usage.md` list newly added Skills.
 - `.clinerules/` references the relevant workflow rules.
+- `.clineignore`, `templates/**`, and `docs/workflows/**` changes are included when they belong to the template update.
+- `git status --short` contains no untracked file inside an intended changed Skill or Workflow directory.
 - `memory-bank/progress.md` records meaningful template updates.
 
 ## Safety Rules
@@ -127,4 +134,3 @@ Check:
 - Excluded files:
 - Notes:
 ```
-

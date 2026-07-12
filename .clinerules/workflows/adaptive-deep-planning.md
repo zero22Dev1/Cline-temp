@@ -40,14 +40,14 @@ Skill `adaptive-deep-planning` を読み込み、以下を判定する。
 
 選択ルートに含まれるものだけを使用する。
 
-- 要件整理: `/grill-with-docs`
-- 不明点分類: `/unknown-list-extractor`
-- 現行仕様化: `/legacy-source-spec-writer`
-- 実装: `/implementation-loop`
-- 計画・差分レビュー: `/review-loop`
-- 独立検証: `/loop-verifier`
-- 長期文脈更新: `/memory-bank-updater`
-- 継続学習: `/ai-learning-curator`
+- 要件整理: Skill `grill-with-docs`
+- 不明点分類: Skill `unknown-list-extractor`
+- 現行仕様化: Skill `legacy-source-spec-writer`
+- 実装: Skill `implementation-loop`
+- 計画・差分レビュー: Skill `review-loop`
+- 独立検証: Skill `loop-verifier`
+- 長期文脈更新: Skill `memory-bank-updater`
+- 継続学習: Skill `ai-learning-curator`
 - 複数回の成果物反復: `/harness-engineering-loop.md`
 - 長時間・複数領域の文脈管理: `/context-window-management.md`
 
@@ -92,9 +92,11 @@ docs/planning/
 
 `Ready` または `Ready with Assumptions` 以外では実装しない。
 
+計画完了をTeamsへ通知する運用では、計画成果物を`/artifact-quality-gate.md`で検証する。Quality Gateが`PASS`で、Blocking Questionがなく、Plan Reviewが実装可能判定の場合だけ、`/teams-completion-notification.md`の`plan`モードへ進む。
+
 ## Step 6: Implementation And Quality Gate
 
-ユーザーが実装を依頼し、計画が承認済みの場合だけ `/implementation-loop` を実行する。
+ユーザーが実装を依頼し、計画が承認済みの場合だけ Skill `implementation-loop` を実行する。
 
 単一実装で完了できる場合は、実装または成果物生成後に `/artifact-quality-gate.md` Workflowへ進む。複数回の反復が必要な場合は `/harness-engineering-loop.md` を使用し、その内部で品質ゲートを実行する。
 
@@ -103,6 +105,7 @@ Planning
   -> Plan Review
   -> Implementation / Artifact Generation
   -> Artifact Quality Gate
+  -> Teams Completion Notification（設定済みの場合）
   -> Memory Bank Update
   -> Continuous Project Learning
   -> Git Workflow

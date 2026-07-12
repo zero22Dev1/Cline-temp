@@ -67,23 +67,30 @@ Use this structure:
 
 ## 1. Overview
 ## 2. Source Files Reviewed
-## 3. Current Behavior
-## 4. User Flow
-## 5. Inputs
-## 6. Outputs
-## 7. Data Model
-## 8. Validation Rules
-## 9. Error Handling
-## 10. External Dependencies
-## 11. Edge Cases
-## 12. Known Unknowns
-## 13. Business Rules
-## 14. Notes For Future Implementation
+## 3. Requirement Traceability
+
+| REQ-ID | Category | Confirmed Behavior | Source Evidence | Confidence |
+|---|---|---|---|---|
+
+## 4. Current Behavior
+## 5. User Flow
+## 6. Inputs
+## 7. Outputs
+## 8. Data Model
+## 9. Validation Rules
+## 10. Error Handling
+## 11. External Dependencies
+## 12. Edge Cases
+## 13. Known Unknowns
+## 14. Business Rules
+## 15. Notes For Future Implementation
 ```
 
 ## Evidence Rules
 
 - Cite file paths and function/class names when possible.
+- Assign stable `REQ-<number>` IDs to confirmed behavior and keep the same IDs in downstream HTML, manifests, tests, and review matrices.
+- Record one or more source file and symbol references for each REQ-ID.
 - Mark uncertain behavior as `Unknown`.
 - Do not invent requirements that are not visible in source or docs.
 - Separate observed behavior from inferred intent.
@@ -96,4 +103,3 @@ Report:
 - Files reviewed
 - Unknowns found
 - Recommended next step
-

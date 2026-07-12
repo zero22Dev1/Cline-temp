@@ -18,7 +18,7 @@
 - ユーザーからの訂正、承認、明示的な好み
 - 実装差分と `git diff`
 - build、lint、test、型検査、静的解析の結果
-- `/review-loop`、`/loop-verifier`、`/artifact-quality-gate.md` の結果
+- Skill `review-loop`、Skill `loop-verifier`、`/artifact-quality-gate.md` の結果
 - 障害、失敗、再試行と有効だった修正
 - 性能測定、プロファイル、クエリ計画、処理時間、メモリ使用量
 - 運用上の問題、ログ、再現手順、ロールバック結果
@@ -56,7 +56,13 @@ Skill `ai-learning-curator` を使用し、各候補へConfidence、Scope、Acti
 - 常時有効な短い原則: `.clinerules/`
 - 繰り返し利用する専門手順: `.cline/skills/`
 
-Skillを新規作成・変更する場合は `/cline-skill-builder` を使用する。
+Skillを新規作成・変更する場合は、次のGateを順番に実行する。
+
+1. Skill `cline-skill-evaluator`でEvaluation Contract、既存Skillとの重複、trigger fixture、期待結果をreport-only評価する。
+2. `NEEDS_REVISION / REJECT / ESCALATE_HUMAN`の場合は作成・変更へ進まない。
+3. 受け入れられた評価結果だけをSkill `cline-skill-builder`へ渡して実装する。
+4. 変更後は生成時の会話を渡さない新しいClineタスクでSkill `cline-skill-evaluator`を再実行する。
+5. 変更後評価が`APPROVE`または`APPROVE_WITH_MINOR_FINDINGS`になるまで、正式な学習として昇格しない。
 
 ## Step 5: 退行防止へ変換する
 

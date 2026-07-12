@@ -22,34 +22,21 @@ These rules are always active for this workspace.
 
 ## Skill Selection
 
-- Use `/context-window-manager` when a task is long-running, crosses multiple modules or Skills, requires repeated iterations, is being resumed or handed off, or shows signs of stale, duplicated, or conflicting context.
-- Use `/context-window-management.md` before and during complex work to establish a Context Contract, load evidence progressively, create checkpoints, and refresh from authoritative sources.
-- Use `/adaptive-deep-planning` as the parent planning Skill when request clarity, change size, investigation depth, or task decomposition must be decided.
-- Use `/artifact-quality-gate` after generating implementation or documentation artifacts when completion requires coverage, correctness, traceability, format, and automated validation checks.
-- Use `/ai-learning-curator` after meaningful corrections, repeated failures, validated improvements, or completed workflows when reusable project learning should be evaluated and promoted.
-- Use `/continuous-project-learning.md` after quality validation when reusable learning should become memory, ADRs, regression tests, performance baselines, rules, or Skills.
-- Use `/harness-engineering-loop.md` when an artifact needs bounded repeated implementation, observation, evaluation, diagnosis, and harness improvement before completion.
-- Use `/cline-skill-builder` when creating, converting, improving, or reviewing Cline Skills.
-- Use `/legacy-source-spec-writer` when turning existing source code into Markdown specifications.
-- Use `/unknown-list-extractor` when extracting unknowns, ambiguities, assumptions, risks, or confirmation items.
-- Use `/grill-with-docs` when requirements are unclear and should be clarified before implementation.
-- Use `/implementation-loop` when implementing approved or clearly specified changes.
-- Use `/review-loop` when reviewing current diffs without making changes.
-- Use `/html-artifact-checker` when checking HTML artifacts against specs, source behavior, fields, flows, validations, errors, and edge cases.
-- Use `/memory-bank-updater` after meaningful planning, implementation, review, or decisions that should persist.
-- Use `/git-commit-workflow` when creating a local featureBranch, staging intended files, committing there, and pushing to the matching remote featureBranch.
-- Use `/loop-budget` when a task needs explicit iteration, time, tool, verification, or stop-condition limits.
-- Use `/loop-triage` when issues, CI failures, unknowns, review findings, or task lists need priority and next-action classification.
-- Use `/loop-verifier` after a loop claims completion and an independent APPROVE / REJECT / ESCALATE_HUMAN decision is needed.
-- Use `/daily-triage` for report-only daily or sprint scans across CI, issues, PRs, commits, unknowns, and project state.
-- Use `/issue-triage` for report-only issue, feature request, discussion, duplicate, priority, and label proposal workflows.
-- Use `/template-commit-workflow` when committing and pushing Cline template files such as `.cline/skills/`, `.clinerules/`, `README.md`, `docs/`, or `memory-bank/`.
+- Skills are selected automatically from their frontmatter descriptions and loaded through Cline's Skill mechanism. Do not treat Skill names as Slash Commands.
+- Slash Commands in this repository are only the `.md` files under `.clinerules/workflows/`, invoked as `/<workflow-name>.md`.
+- For report-only Skill evaluation, use Skill `cline-skill-evaluator`; for an accepted creation or repair, use Skill `cline-skill-builder` in a separate step.
+- For normal code review, use Skill `review-loop`; use Skill `loop-verifier` only when an explicit acceptance decision is required.
+- For the complete source-to-HTML-to-XLSM flow, invoke `/source-to-verified-xlsm.md`; use `/source-to-xlsm-template.md` only when the HTML and mapping inputs are already ready.
+- For large PDF evidence, invoke `/pdf-context-conversion.md`, read its index first, and load only relevant chunks; keep the original PDF as the source of truth.
+- For Teams completion alerts, invoke `/teams-completion-notification.md` only after its plan or implementation completion gates pass; never store the webhook URL in repository files.
+- For template Git publication, use Skill `template-commit-workflow`; use Skill `git-commit-workflow` for other feature-branch commits.
+- Use a parent Workflow when several Skills must run in a fixed order. Otherwise, describe the task naturally and allow Cline to activate the matching Skill.
 
 ## Planning And Clarification
 
 - Do not implement when business rules, acceptance criteria, or scope are materially unclear.
-- If uncertainty can change behavior or cause rework, clarify first with `/grill-with-docs`.
-- If uncertainty can be listed independently, record it with `/unknown-list-extractor`.
+- If uncertainty can change behavior or cause rework, clarify first with Skill `grill-with-docs`.
+- If uncertainty can be listed independently, record it with Skill `unknown-list-extractor`.
 - Mark unresolved requirements as `Unknown`; do not guess.
 - Separate confirmed decisions from assumptions.
 - Start new loop patterns in report-only mode before enabling implementation, labeling, closing, merging, or pushing.
@@ -83,7 +70,7 @@ These rules are always active for this workspace.
 - Focus on correctness, regressions, missing tests, spec violations, and delivery risk.
 - Do not report speculative issues without evidence.
 - If no issues are found, say so clearly and note remaining test gaps or residual risks.
-- Use `/loop-verifier` when the result needs an explicit approval decision rather than a normal review summary.
+- Use Skill `loop-verifier` when the result needs an explicit approval decision rather than a normal review summary.
 
 ## Memory Bank Rules
 
@@ -92,7 +79,7 @@ These rules are always active for this workspace.
 - Update `memory-bank/techContext.md` when technical constraints, commands, architecture, or conventions change.
 - Update `memory-bank/projectbrief.md` only for stable project purpose or scope changes.
 - Keep memory entries concise; do not paste raw logs, large diffs, secrets, or temporary scratch notes.
-- Do not promote unverified observations into permanent rules or Skills; evaluate them with `/ai-learning-curator` first.
+- Do not promote unverified observations into permanent rules or Skills; evaluate them with Skill `ai-learning-curator` first.
 
 ## Safety Rules
 
@@ -101,5 +88,5 @@ These rules are always active for this workspace.
 - Do not delete or reset files unless explicitly requested.
 - When a task touches GitHub publishing, inspect `git status` and avoid staging unrelated changes.
 - Prefer explicit file paths when staging changes.
-- For Git commits and pushes, use `/git-commit-workflow`; default to local featureBranch -> remote featureBranch, and never force push or run destructive Git commands without explicit approval.
-- For template-only Git work, use `/template-commit-workflow`; default to `feature#template#<number>` and stage only template-scope files.
+- For Git commits and pushes, use Skill `git-commit-workflow`; default to local featureBranch -> remote featureBranch, and never force push or run destructive Git commands without explicit approval.
+- For template-only Git work, use Skill `template-commit-workflow`; default to `feature#template#<number>` and stage only template-scope files.

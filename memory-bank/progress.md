@@ -24,6 +24,13 @@
 - Added `continuous-project-learning` Workflow to convert validated lessons into maintainability, performance, reliability, and quality improvements.
 - Added harness engineering knowledge, Skill, Workflow, and usage guidance for bounded artifact iteration with observable feedback and durable learning.
 - Added context window management knowledge, Skill, Workflow, and usage guidance for progressive loading, evidence-preserving checkpoints, context refresh, and reliable handoffs.
+- Added a macro-enabled Excel template Skill and Workflow that copy `.xlsm` templates, populate source-derived sections, and verify VBA preservation.
+- Added an end-to-end source-to-verified-XLSM Workflow and independent traceability checker for source, specification, HTML mock, capture manifest, and Excel coverage.
+- Added `.clineignore` to exclude dependencies, caches, secrets, logs, and Office lock files while keeping templates and generated workflow artifacts available to Cline.
+- Added `cline-skill-evaluator` as a report-only evaluator with a 100-point rubric for individual Skills and the complete Cline Skill portfolio.
+- Remediated portfolio findings by separating Skill activation from Workflow slash commands, removing builder/evaluator trigger overlap, adding learning evaluation gates, expanding template commit scope, standardizing REQ-ID traceability, and adding XLSM contract verification tests.
+- Added `pdf-context-converter` and `/pdf-context-conversion.md` to convert large PDFs into an index, page-status metadata, chunked Markdown, and optional semantic HTML for selective context loading.
+- Added `teams-completion-notifier` and `/teams-completion-notification.md` for gated Microsoft Teams Workflows notifications after plan quality approval or implementation, tests, review, quality gate, and independent verification complete.
 
 ## Pending
 

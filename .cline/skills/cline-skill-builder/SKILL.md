@@ -1,11 +1,13 @@
 ---
 name: cline-skill-builder
-description: Create, convert, improve, or review Cline Skills. Use when making a new Cline skill, converting Claude/Cursor/Codex skills to Cline, fixing skill discovery issues, or designing reusable workflows as Cline skills.
+description: Create, convert, or improve Cline Skills after an evaluation or explicit creation request. Use when implementing accepted Skill findings, making a new Skill, converting Claude/Cursor/Codex instructions to Cline, fixing discovery issues, or splitting reusable procedures from Rules. Do not use for report-only Skill evaluation.
 ---
 
 # Cline Skill Builder
 
 Create focused Cline Skills that are easy to trigger and safe to maintain.
+
+独立したreport-only評価には`cline-skill-evaluator`を使用する。このSkillは、評価後に承認されたSkillの作成・修正・分割を担当する。
 
 ## Valid Structure
 
@@ -33,10 +35,10 @@ The `name` must exactly match the parent directory name.
 
 - Creating a new Cline Skill
 - Converting a prompt, rule, checklist, Claude Skill, Cursor rule, or Codex workflow into a Cline Skill
-- Reviewing whether a Skill is too broad, vague, or heavy
+- Implementing accepted findings from `cline-skill-evaluator`
 - Splitting a large `.clinerules` file into smaller Skills
 - Designing supporting `docs/`, `templates/`, or `scripts/` for a Skill
-- Fixing a Skill that does not appear or appears with the wrong slash command
+- Fixing a Skill that is not discovered or does not activate for intended prompts
 
 ## Do Not Use This Skill For
 
@@ -44,6 +46,7 @@ The `name` must exactly match the parent directory name.
 - Long-term project memory that belongs in `memory-bank/`
 - One-time advice that does not need reuse
 - Normal source code changes
+- Report-only Skill evaluation; use `cline-skill-evaluator`
 
 ## Creation Process
 
@@ -57,11 +60,10 @@ The `name` must exactly match the parent directory name.
 
 ## Output Format
 
-When creating or reviewing a Skill, provide:
+When creating or updating a Skill, provide:
 
 - Recommended location
 - Final `SKILL.md`
 - Optional supporting files
 - Invocation examples
 - Notes about overlap with existing Skills
-

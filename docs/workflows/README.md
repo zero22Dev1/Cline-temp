@@ -10,7 +10,11 @@
 ├── artifact-quality-gate.md
 ├── continuous-project-learning.md
 ├── harness-engineering-loop.md
-└── context-window-management.md
+├── context-window-management.md
+├── pdf-context-conversion.md
+├── teams-completion-notification.md
+├── source-to-xlsm-template.md
+└── source-to-verified-xlsm.md
 
 docs/workflows/
 ├── README.md
@@ -22,7 +26,15 @@ docs/workflows/
 │   └── USAGE.md
 ├── harness-engineering-loop/
 │   └── USAGE.md
-└── context-window-management/
+├── context-window-management/
+│   └── USAGE.md
+├── pdf-context-conversion/
+│   └── USAGE.md
+├── teams-completion-notification/
+│   └── USAGE.md
+├── source-to-xlsm-template/
+│   └── USAGE.md
+└── source-to-verified-xlsm/
     └── USAGE.md
 ```
 
@@ -35,6 +47,10 @@ docs/workflows/
 | `/continuous-project-learning.md` | 検証済みの学習をmemory・ADR・Rule・Skill・回帰防止策へ昇格する | [continuous-project-learning/USAGE.md](continuous-project-learning/USAGE.md) |
 | `/harness-engineering-loop.md` | 成果物を予算内で反復し、失敗をハーネス改善へ還元する | [harness-engineering-loop/USAGE.md](harness-engineering-loop/USAGE.md) |
 | `/context-window-management.md` | 必要な文脈を選別・段階読込し、Checkpointと再構成で品質を維持する | [context-window-management/USAGE.md](context-window-management/USAGE.md) |
+| `/pdf-context-conversion.md` | PDFを索引付き分割Markdownへ変換し、必要範囲だけ読み込む | [pdf-context-conversion/USAGE.md](pdf-context-conversion/USAGE.md) |
+| `/teams-completion-notification.md` | 計画または実装の品質確認完了後にTeamsへ通知する | [teams-completion-notification/USAGE.md](teams-completion-notification/USAGE.md) |
+| `/source-to-xlsm-template.md` | HTML／Markdownのセクションを`.xlsm`テンプレートのコピーへ出力する | [source-to-xlsm-template/USAGE.md](source-to-xlsm-template/USAGE.md) |
+| `/source-to-verified-xlsm.md` | 既存ソースからHTML・XLSMを生成し、全段階の欠落・矛盾を独立照合する | [source-to-verified-xlsm/USAGE.md](source-to-verified-xlsm/USAGE.md) |
 
 ## 基本的な実行順
 
